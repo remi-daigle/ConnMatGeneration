@@ -7,8 +7,9 @@ require(tidyverse)
 
 pu <- st_read("pulayer_BC_marine_hx_conservationfeats.shp")
 
-spec <- read.table("Marxan_hexagon_pu/input/spec.dat", sep = "\t", header=T)
-spec$maxdispersal <- c(rep(25,14),200,50,200,200,50)
+spec <- read.table("Marxan_hexagon_pu/input/spec.dat", sep = "\t", header=T) %>% 
+  filter(id %in% c(1,4,7,11,16)) %>% 
+  mutate(maxdispersal <- c(rep(25,4),50))
 
 el <- st_buffer(pu,5) %>% 
   st_intersects(pu) %>% 
